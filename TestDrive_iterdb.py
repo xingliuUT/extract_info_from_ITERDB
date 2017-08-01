@@ -1,0 +1,26 @@
+from read_iterdb_file import *
+from read_iterdb_x import *
+import sys
+
+rhot_te1, te1, ti1, ne1, ni1, nb1, vrot1 = read_iterdb_file(sys.argv[1])
+ITERDBdict = read_iterdb_x(sys.argv[1])
+plt.plot(rhot_te1, te1, '.', label = 'old')
+plt.plot(ITERDBdict['rhot_te'], ITERDBdict['te'], label = 'new')
+plt.legend()
+plt.show()
+plt.plot(rhot_te1, ti1, '.', label = 'old')
+plt.plot(ITERDBdict['rhot_ti'], ITERDBdict['ti'], label = 'new')
+plt.legend()
+plt.show()
+plt.plot(rhot_te1, ne1, '.', label = 'old')
+plt.plot(ITERDBdict['rhot_ne'], ITERDBdict['ne'], label = 'new')
+plt.legend()
+plt.show()
+plt.plot(rhot_te1, ni1, '.', label = 'old')
+plt.plot(ITERDBdict['rhot_ni'], ITERDBdict['ni'], label = 'new')
+plt.legend()
+plt.show()
+plt.plot(rhot_te1, vrot1, '.', label = 'old')
+plt.plot(ITERDBdict['rhot_vrot'], ITERDBdict['vrot'], label = 'new')
+plt.legend()
+plt.show()
