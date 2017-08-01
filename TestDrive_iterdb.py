@@ -19,6 +19,7 @@ ne_uniR = interp(ITERDBdict['rhot_ne'], ITERDBdict['ne'], rhot_uniR)
 Qheating_MW = 1.
 ntheta = 512
 area_m2 = surfaceArea(EFITdict, ntheta)
+print('surface area: {}'.format(area_m2))
 # convert eV into J: multiply by e
 charge_e = 1.6E-19
 chi_uniR = Qheating_MW * 1.E6 / area_m2 / d_te_d_R / charge_e / ne_uniR
