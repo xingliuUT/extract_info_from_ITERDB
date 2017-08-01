@@ -12,8 +12,13 @@ EFITdict = read_EFIT(sys.argv[2])
 uni_R = np.linspace(EFITdict['R'][0], EFITdict['R'][-1], len(EFITdict['R'])*10)
 rhot_uniR = interp(EFITdict['R'], EFITdict['rhotn'], uni_R)
 te_uniR = interp(ITERDBdict['rhot_te'], ITERDBdict['te'], rhot_uniR)
+d_te_d_R = - first_derivative(te_uniR, uni_R)
 
 if 1 == 1:
+    plt.plot(rhot_uniR, d_te_d_R, '.', label = 'd Te / d R')
+    plt.legend()
+    plt.show()
+if 1 == 0:
     #plt.plot(rhot_te1, te1, '.', label = 'old')
     plt.plot(rhot_uniR, te_uniR, '.', label = 'uniR')
     plt.plot(ITERDBdict['rhot_te'], ITERDBdict['te'], label = 'new')
