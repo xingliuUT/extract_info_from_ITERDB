@@ -33,12 +33,21 @@ D_delB = np.pi * vth_hires * Ls_hires * delBn**2
 
 if 1 == 1:
     plt.semilogy(rhot_hires, D_delB, label = 'D')
+    plt.semilogy(rhot_uniR, chi_uniR, label = 'chi')
     plt.axis([0.85, 1., 0.01, 1.])
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
 
 if 1 == 1:
+    plt.plot(rhot_hires, D_delB, label = 'D')
+    plt.plot(rhot_uniR, chi_uniR, label = 'chi')
+    plt.axis([0.85, 1., 0.01, 1.])
+    plt.xlabel('rhot')
+    plt.legend()
+    plt.show()
+
+if 1 == 0:
     #plt.plot(rhot_uniR, chi_uniR, '.', label = 'chi')
     plt.semilogy(rhot_uniR, chi_uniR, '.', label = 'chi')
     plt.axis([0.85, 1., 0.01, 1.])
