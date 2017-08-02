@@ -34,6 +34,11 @@ vth_uniR = np.sqrt(te_uniR * charge_e / me_kg)
 
 rhot_hires, shat_hires, Ls_hires = magneticShear(EFITdict, True)
 vth_hires = interp(rhot_uniR, vth_uniR, rhot_hires)
+# Bdot [T/s] and f [kHz] is given from experiment
+# angular velocity omega = 2 pi f
+# total magnitude of the magnetic field is B ~ 5 T
+# the decay factor is about 0.25
+# B_tilda_n is B_tilda / B in the plasma
 B_tilda_n = 3.E-5
 D_Btilda = np.pi * vth_hires * Ls_hires * B_tilda_n**2
 
