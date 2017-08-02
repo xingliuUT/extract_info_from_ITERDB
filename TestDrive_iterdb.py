@@ -24,18 +24,23 @@ area_m2 = surfaceArea(EFITdict, ntheta)
 print('surface area: {}'.format(area_m2))
 # convert eV into J: multiply by e
 charge_e = 1.6E-19
-chi_uniR = Qheating_MW * 1.E6 / area_m2 / d_te_d_R / charge_e / ne_uniR
+chi_uniR = Qheating_MW * 1.E6 / area_m2 / (d_te_d_R / 2.) / charge_e / ne_uniR
 
 # compute diffusivity from B_tilda / B
 p_kg = 1.673E-27
 me_kg = 9.11E-31
 mD_kg = 2. * p_kg
-vth_uniR = np.sqrt(2. * te_uniR * charge_e / me_kg)
-rhot_hires, shat_hires, Ls_hires = magneticShear(EFITdict)
+vth_uniR = np.sqrt(te_uniR * charge_e / me_kg)
+
+rhot_hires, shat_hires, Ls_hires = magneticShear(EFITdict, True)
 vth_hires = interp(rhot_uniR, vth_uniR, rhot_hires)
-B_tilda_n = 3.E-4
+B_tilda_n = 3.E-5
 D_Btilda = np.pi * vth_hires * Ls_hires * B_tilda_n**2
 
+if 1 == 1:
+    plt.plot(rhot_uniR, vth_uniR, label = 'v_th')
+    plt.legend()
+    plt.show()
 if 1 == 1:
     plt.semilogy(rhot_hires, D_Btilda, label = 'D')
     plt.semilogy(rhot_uniR, chi_uniR, label = 'chi')
