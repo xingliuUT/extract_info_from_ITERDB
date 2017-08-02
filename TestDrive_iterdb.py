@@ -10,12 +10,14 @@ from calc_volume_from_EFIT import *
 ITERDBdict = read_iterdb_x(sys.argv[1])
 EFITdict = read_EFIT(sys.argv[2])
 
+# compute d Te / d R
 uni_R = np.linspace(EFITdict['R'][0], EFITdict['R'][-1], len(EFITdict['R'])*10)
 rhot_uniR = interp(EFITdict['R'], EFITdict['rhotn'], uni_R)
 te_uniR = interp(ITERDBdict['rhot_te'], ITERDBdict['te'], rhot_uniR)
 d_te_d_R = - first_derivative(te_uniR, uni_R)
 ne_uniR = interp(ITERDBdict['rhot_ne'], ITERDBdict['ne'], rhot_uniR)
 
+# compute chi
 Qheating_MW = 1.
 ntheta = 512
 area_m2 = surfaceArea(EFITdict, ntheta)
@@ -24,27 +26,28 @@ print('surface area: {}'.format(area_m2))
 charge_e = 1.6E-19
 chi_uniR = Qheating_MW * 1.E6 / area_m2 / d_te_d_R / charge_e / ne_uniR
 
+# compute diffusivity from B_tilda / B
 p_kg = 1.673E-27
 me_kg = 9.11E-31
 mD_kg = 2. * p_kg
 vth_uniR = np.sqrt(2. * te_uniR * charge_e / me_kg)
 rhot_hires, shat_hires, Ls_hires = magneticShear(EFITdict)
 vth_hires = interp(rhot_uniR, vth_uniR, rhot_hires)
-delBn = 3.E-4
-D_delB = np.pi * vth_hires * Ls_hires * delBn**2
+B_tilda_n = 3.E-4
+D_Btilda = np.pi * vth_hires * Ls_hires * B_tilda_n**2
 
 if 1 == 1:
-    plt.semilogy(rhot_hires, D_delB, label = 'D')
+    plt.semilogy(rhot_hires, D_Btilda, label = 'D')
     plt.semilogy(rhot_uniR, chi_uniR, label = 'chi')
-    plt.axis([0.85, 1., 0.01, 100.])
+    plt.axis([0.85, 1., 0.01, 10.])
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
 
 if 1 == 1:
-    plt.plot(rhot_hires, D_delB, label = 'D')
+    plt.plot(rhot_hires, D_Btilda, label = 'D')
     plt.plot(rhot_uniR, chi_uniR, label = 'chi')
-    plt.axis([0.85, 1., 0.01, 100.])
+    plt.axis([0.85, 1., 0.01, 10.])
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
