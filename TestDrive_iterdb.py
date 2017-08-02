@@ -25,8 +25,9 @@ charge_e = 1.6E-19
 chi_uniR = Qheating_MW * 1.E6 / area_m2 / d_te_d_R / charge_e / ne_uniR
 
 p_kg = 1.673E-27
+me_kg = 9.11E-31
 mD_kg = 2. * p_kg
-vth_uniR = np.sqrt(2. * te_uniR * charge_e / mD_kg)
+vth_uniR = np.sqrt(2. * te_uniR * charge_e / me_kg)
 rhot_hires, shat_hires, Ls_hires = magneticShear(EFITdict)
 vth_hires = interp(rhot_uniR, vth_uniR, rhot_hires)
 delBn = 3.E-4
@@ -35,7 +36,7 @@ D_delB = np.pi * vth_hires * Ls_hires * delBn**2
 if 1 == 1:
     plt.semilogy(rhot_hires, D_delB, label = 'D')
     plt.semilogy(rhot_uniR, chi_uniR, label = 'chi')
-    plt.axis([0.85, 1., 0.01, 1.])
+    plt.axis([0.85, 1., 0.01, 100.])
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
@@ -43,7 +44,7 @@ if 1 == 1:
 if 1 == 1:
     plt.plot(rhot_hires, D_delB, label = 'D')
     plt.plot(rhot_uniR, chi_uniR, label = 'chi')
-    plt.axis([0.85, 1., 0.01, 1.])
+    plt.axis([0.85, 1., 0.01, 100.])
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
