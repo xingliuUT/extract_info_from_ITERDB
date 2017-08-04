@@ -83,8 +83,8 @@ if 1 == 1:
         rhoi_m = 1.02*np.sqrt(mref)*np.sqrt(te)/Bref_Gauss
         result1 = rhoi_m * (fprime_i + tprime_i) / Lref_m
 
-    plt.plot(rhot1, result1, label = 'radial grid: sqrt(psi_tor)')
-    plt.plot(rhot2, result2, label = 'radial grid: major radius (m)')
+    plt.plot(rhot1, result1, label = 'derivative wrt sqrt(psi_tor)')
+    plt.plot(rhot2, result2, label = 'derivative wrt major radius (m)')
     plt.xlabel('rhot')
     plt.legend(loc = 2)
     plt.axis([0.9,1.0,0.,0.35])
