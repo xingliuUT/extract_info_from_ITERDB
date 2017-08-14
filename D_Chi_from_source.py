@@ -30,20 +30,20 @@ charge_e = 1.6E-19
 chi_uniR = Qheating_MW * 1.E6 / area_m2 / (d_te_d_R / 2.) / charge_e / ne_uniR
 
 
-if 1 == 1:
+if 1 == 0:
     plt.plot(rhot_uniR, ne_uniR, '.', label = 'ne')
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
-if 1 == 1:
+if 1 == 0:
     plt.plot(rhot_uniR, d_ne_d_R, '.', label = 'd ne / d R')
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
 if 1 == 1:
-    plt.semilogy(rhot_uniR, D_uniR, label = 'D')
-    plt.semilogy(rhot_uniR, chi_uniR, label = 'chi')
-    plt.axis([0.85, 1., 0., 5.])
+    plt.plot(rhot_uniR, D_uniR, label = 'D')
+    plt.axis([0.85, 1., 0., .05])
+    plt.ylabel('m^2/s')
     plt.xlabel('rhot')
     plt.title('I mode')
     plt.legend()
@@ -52,8 +52,19 @@ if 1 == 1:
     plt.plot(rhot_uniR, D_uniR, label = 'D')
     plt.plot(rhot_uniR, chi_uniR, label = 'chi')
     plt.axis([0.85, 1., 0., 5.])
+    plt.ylabel('m^2/s')
     plt.xlabel('rhot')
     plt.title('I mode')
     plt.legend()
     plt.show()
+if 1 == 1:
+    plt.semilogy(rhot_uniR, D_uniR, label = 'D')
+    plt.semilogy(rhot_uniR, chi_uniR, label = 'chi')
+    plt.axis([0.85, 1., 0., 5.])
+    plt.ylabel('m^2/s')
+    plt.xlabel('rhot')
+    plt.title('I mode')
+    plt.legend()
+    plt.show()
+
 
