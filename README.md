@@ -17,7 +17,16 @@ This project contains code to extract information from [ITERDB](https://inis.iae
 
 `rhoiL.py` computes the ratio between ion gyroradius `rhoi` and pedestal scale length `L`.
 
-
 ## Usage
 
+Usage of `read_iterdb_x.py` and `write_iterdb` is in `TestDrive_iterdb.py`. To run `TestDrive_iterdb.py`, make sure that there's an ITERDB file and an EFIT file in the working directory:
+```
+python TestDrive_efit.py CMOD1120815027May12.iterdb g1120907032.01012
+```
+`diffFromMTM.py` and `D_chi_from_source.py` follow the same format, taking two arguments: ITERDB file, EFIT file.
+
+To compare two ITERDB files, use `doubleCheckITERDB.py`:
+```
+python doubleCheckITERDB.py CMOD1120815027May12.iterdb CMOD1120815027May08.iterdb
+```
 ## Note
