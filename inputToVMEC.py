@@ -11,8 +11,14 @@ from calc_fields_from_EFIT import *
 EFITdict = read_EFIT(sys.argv[1])
 ITERDBdict = read_iterdb_x(sys.argv[2])
 
+npoints = 400
+
 rhotn = EFITdict['rhotn']
 psipn = EFITdict['psipn']
+
+psipn_hires = np.linspace(0., 1., npoints)
+rhotn_hires = interp(psipn, rhotn, psipn_hires)
+
 
 e_charge = 1.6E-19
 zave = 6.
@@ -29,35 +35,35 @@ rhot_ni0 = ITERDBdict['rhot_ni']
 nz0 = ITERDBdict['nz']
 rhot_nz0 = ITERDBdict['rhot_nz']
 
-te = interp(rhot_te0, te0, rhotn)
-ti = interp(rhot_ti0, ti0, rhotn)
-ne = interp(rhot_ne0, ne0, rhotn)
-ni1 = interp(rhot_ni0, ni0, rhotn)
-nz1 = interp(rhot_nz0, nz0, rhotn)
+te = interp(rhot_te0, te0, rhotn_hires)
+ti = interp(rhot_ti0, ti0, rhotn_hires)
+ne = interp(rhot_ne0, ne0, rhotn_hires)
+ni1 = interp(rhot_ni0, ni0, rhotn_hires)
+nz1 = interp(rhot_nz0, nz0, rhotn_hires)
 
 ni = ne * (zave - zeff) / (zave - 1.)
 nz = ne * (zeff - 1.) / (zave - 1.) / zave
 
 pressure_MKS = (ne * te + (ni + nz) * ti) * e_charge
 
-if 1 == 0:
+if 1 == 1:
     plt.plot(psipn, EFITdict['Pres'], label = 'Pressure EFIT')
-    plt.plot(psipn, pressure_MKS, label = 'Pressure ITERDB')
+    plt.plot(psipn_hires, pressure_MKS, label = 'Pressure ITERDB')
     plt.xlabel('psip')
     plt.legend()
     plt.show()
-if 1 == 0:
-    plt.plot(psipn, ne * 1E-20, label = 'ne (10^20 m^-3)')
-    plt.plot(psipn, ti * 1E-3, label = 'ti (KeV)')
-    plt.plot(psipn, te * 1E-3, label = 'te (KeV)')
+if 1 == 1:
+    plt.plot(psipn_hires, ne * 1E-20, label = 'ne (10^20 m^-3)')
+    plt.plot(psipn_hires, ti * 1E-3, label = 'ti (KeV)')
+    plt.plot(psipn_hires, te * 1E-3, label = 'te (KeV)')
     plt.xlabel('psip')
     plt.legend()
     plt.show()
 
-if 1 == 0:
+if 1 == 1:
     f = open('inputs.txt','w')
     f.write('#1.psi_pol 2.pressure(MKS) 3.ne(10^20 m^-3) 4.ti(KeV) 5.te(KeV)\n')
-    np.savetxt(f,np.column_stack((psipn, pressure_MKS, ne * 1E-20, ti * 1E-3, te * 1E-3)))
+    np.savetxt(f,np.column_stack((psipn_hires, pressure_MKS, ne * 1E-20, ti * 1E-3, te * 1E-3)))
     f.close()
 
 psip_fs = 0.995
