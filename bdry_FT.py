@@ -1,9 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
+import sys
 
-#bndy = np.genfromtxt('rz_formatted.txt',skip_header=1,dtype = 'float')
-bndy = np.loadtxt('rz_formatted.txt', dtype = 'float')
+ncoeff = 49
+
+#bndy = np.genfromtxt(sys.argv[1],skip_header=1,dtype = 'float')
+bndy = np.loadtxt(sys.argv[1], dtype = 'float')
 r_bndy = bndy[:,0]
 z_bndy = bndy[:,1]
 #plt.plot(r_bndy,z_bndy)
@@ -58,12 +61,12 @@ def format_D(fl):
     a = '%.12E' % fl
     return a.split('E')[0]+'D'+a.split('E')[1]
 if 1 == 1:
-    f = open('coeff_formatted.txt','w')
-    for i in range(57):
+    f = open('coeff_' + sys.argv[1],'w')
+    for i in range(ncoeff):
         f.write('{0}{1}{2}= {3:.24}    {4}{5}{6}= {7:.24}'.
         format('RBC(0,', i, ')', format_D(rbc[i]), 'ZBS(0,', i, ')', format_D(zbs[i])))
         f.write('\n') 
-    for i in range(57):
+    for i in range(ncoeff):
         f.write('{0}{1}{2}= {3:.24}    {4}{5}{6}= {7:.24}'.
         format('RBS(0,', i, ')', format_D(rbs[i]), 'ZBC(0,', i, ')', format_D(zbc[i])))
         f.write('\n') 
