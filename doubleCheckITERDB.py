@@ -50,7 +50,7 @@ if 1 == 1:
 if 1 == 1:
     plt.plot(ITERDBdict1['rhot_ne'], ITERDBdict1['nz'], label = '1')
     plt.plot(ITERDBdict2['rhot_ne'], ITERDBdict2['nz'], label = '2')
-    plt.title('Zeff')
+    plt.title('nz')
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
