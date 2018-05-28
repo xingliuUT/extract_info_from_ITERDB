@@ -43,16 +43,16 @@ te_r = te_fine[r_ind]
 lv = 3*np.sqrt(te_l/te_c)
 lw = lv**2
 
-print 'lv = ', lv
-print 'te_l = ', te_l*0.001/e
-print 'te_c = ', te_c*0.001/e
-print 'te_r = ', te_r*0.001/e
-print 'lw = ', lw
-print 'buffer', l_buffer_x, r_buffer_x
+print('lv = ', lv)
+print('te_l = ', te_l*0.001/e)
+print('te_c = ', te_c*0.001/e)
+print('te_r = ', te_r*0.001/e)
+print('lw = ', lw)
+print('buffer', l_buffer_x, r_buffer_x)
 
 nv = 48*np.sqrt(te_l/te_r)
 nw = 16*te_l/te_r
 
-print 'nv = ', nv
-print 'nw = ', nw
+print('nv = ', nv)
+print('nw = ', nw)
 
