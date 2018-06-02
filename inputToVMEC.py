@@ -5,7 +5,7 @@ from interp import *
 from finite_differences_x import *
 from read_iterdb_x import *
 from read_EFIT import *
-from calc_volume_from_EFIT import *
+#from calc_volume_from_EFIT import *
 from calc_fields_from_EFIT import *
 
 EFITdict = read_EFIT(sys.argv[1])
@@ -22,7 +22,7 @@ rhotn_hires = interp(psipn, rhotn, psipn_hires)
 
 e_charge = 1.6E-19
 zave = 6.
-zeff = 1.5
+#zeff = 1.5
 
 te0 = ITERDBdict['te']
 rhot_te0 = ITERDBdict['rhot_te']
@@ -38,11 +38,11 @@ rhot_nz0 = ITERDBdict['rhot_nz']
 te = interp(rhot_te0, te0, rhotn_hires)
 ti = interp(rhot_ti0, ti0, rhotn_hires)
 ne = interp(rhot_ne0, ne0, rhotn_hires)
-ni1 = interp(rhot_ni0, ni0, rhotn_hires)
-nz1 = interp(rhot_nz0, nz0, rhotn_hires)
+ni = interp(rhot_ni0, ni0, rhotn_hires)
+nz = interp(rhot_nz0, nz0, rhotn_hires)
 
-ni = ne * (zave - zeff) / (zave - 1.)
-nz = ne * (zeff - 1.) / (zave - 1.) / zave
+#ni = ne * (zave - zeff) / (zave - 1.)
+#nz = ne * (zeff - 1.) / (zave - 1.) / zave
 
 pressure_MKS = (ne * te + (ni + nz) * ti) * e_charge
 
@@ -66,6 +66,17 @@ if 1 == 1:
     np.savetxt(f,np.column_stack((psipn_hires, pressure_MKS, ne * 1E-20, ti * 1E-3, te * 1E-3)))
     f.close()
 
+zeff = (ni + zave ** 2 * nz) / ne
+
+if 1 == 1:
+    f = open('zeff_QH_1p.txt','w')
+    f.write('#1.psi_pol 2.zeff\n')
+    np.savetxt(f,np.column_stack((psipn_hires, zeff)))
+    f.close()
+    plt.plot(psipn_hires, zeff, label = 'zeff')
+    plt.legend()
+    plt.xlabel('psip')
+    plt.show()
 psip_fs = 0.995
 ntheta = 512
 R_fs, Z_fs, B_pol, B_tor, B_tot = BfieldsFS(EFITdict, psip_fs, ntheta, True)
