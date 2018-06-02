@@ -33,15 +33,15 @@ rbs = np.append(rbs,0)
 zbc = np.append(zbc,z_m[0])
 zbs = np.append(zbs,0)
 
-for i in np.arange(1,n/2):
-	rbc_i = (r_m[i].real+r_m[-i].real)
+for i in np.arange(1,n//2):
+        rbc_i = (r_m[i].real+r_m[-i].real)
         rbs_i = -(r_m[i].imag-r_m[-i].imag)
-	zbc_i = (z_m[i].real+z_m[-i].real)
+        zbc_i = (z_m[i].real+z_m[-i].real)
         zbs_i = -(z_m[i].imag-z_m[-i].imag)
-	rbc = np.append(rbc,rbc_i)
-	rbs = np.append(rbs,rbs_i)
-	zbc = np.append(zbc,zbc_i)
-	zbs = np.append(zbs,zbs_i)
+        rbc = np.append(rbc,rbc_i)
+        rbs = np.append(rbs,rbs_i)
+        zbc = np.append(zbc,zbc_i)
+        zbs = np.append(zbs,zbs_i)
 
 if 1 == 0:
     plt.plot(rbc, label = 'rbc')
