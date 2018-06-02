@@ -164,10 +164,21 @@ eta_i = tprime_i / nprime_i
 eta_e = tprime_e / nprime_e
 eta_z = tprime_i / nprime_z
 
-if 1 == 1:
+if 1 == 0:
     plt.plot(uni_rhot,nprime_e,label='nprime_e')
     plt.plot(uni_rhot,nprime_i,label='nprime_i')
     plt.plot(uni_rhot,nprime_z,label='nprime_z')
+    plt.xlabel('rhot')
+    plt.legend()
+    plt.show()
+
+if 1 == 1:
+    f = open('tprimes.dat','w')
+    f.write('# 1.rho_tor 2.tprime_e 3.tprime_i\n#\n')
+    np.savetxt(f,np.column_stack((uni_rhot,tprime_e,tprime_i)))
+    f.close()
+    plt.plot(uni_rhot,tprime_e,label='tprime_e')
+    plt.plot(uni_rhot,tprime_i,label='tprime_i')
     plt.xlabel('rhot')
     plt.legend()
     plt.show()
@@ -295,7 +306,7 @@ if 1 == 0:
     np.savetxt(f,np.column_stack((uni_rhot,rhop_u,ti_u,nz_u*10.)))
     f.close()
 
-if 1 == 1:
+if 1 == 0:
     rhop=np.sqrt(psi0)
     file_out_base = sys.argv[3]
     base_number = '_new'
