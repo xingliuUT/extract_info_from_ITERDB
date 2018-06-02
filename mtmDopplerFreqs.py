@@ -1,6 +1,6 @@
 from read_EFIT import *
-from read_iterdb_file import *
-from finite_differences import *
+from read_iterdb_x import *
+from finite_differences_x import *
 import matplotlib.pyplot as plt
 from interp import *
 import sys
@@ -26,16 +26,21 @@ e = 1.6*10**(-19)
 mref = 2.
 M_kg = 3.3*10**(-27)
 
-rhot0, te0, ti0, ne0, ni0, nz0, vrot0 = read_iterdb_file(iterdb_file_name)
+#rhot0, te0, ti0, ne0, ni0, nz0, vrot0 = read_iterdb_file(iterdb_file_name)
+ITERDBdict = read_iterdb_x(iterdb_file_name)
+print(list(ITERDBdict.keys()))
+#['rhot_te', 'te', 'rhot_ti', 'ti', 'rhot_ne', 'ne', \
+#'rhot_ni', 'ni', 'rhot_nz', 'nz', 'rhot_vrot', 'vrot']
 
-uni_rhot = np.linspace(min(rhot0),max(rhot0),len(rhot0)*10.)
+uni_rhot = np.linspace(min(ITERDBdict['rhot_te']), \
+max(ITERDBdict['rhot_te']), len(ITERDBdict['rhot_te']) * 10)
 
-te_u = interp(rhot0,te0,uni_rhot)
-ne_u = interp(rhot0,ne0,uni_rhot)
-vrot_u = interp(rhot0,vrot0,uni_rhot)
+te_u = interp(ITERDBdict['rhot_te'], ITERDBdict['te'], uni_rhot)
+ne_u = interp(ITERDBdict['rhot_ne'], ITERDBdict['ne'], uni_rhot)
+vrot_u = interp(ITERDBdict['rhot_vrot'], ITERDBdict['vrot'], uni_rhot)
 
-tprime_e = -fd_d1_o4(te_u,uni_rhot)/te_u
-nprime_e = -fd_d1_o4(ne_u,uni_rhot)/ne_u
+tprime_e = -first_derivative(te_u,uni_rhot)/te_u
+nprime_e = -first_derivative(ne_u,uni_rhot)/ne_u
 
 #kyGENE = 102*np.sqrt(mref)*np.sqrt(te_u)/Bref_Gauss*k_theta_cm*k2Factor
 x0Ind = np.argmin(abs(uni_rhot - x0))
@@ -46,18 +51,25 @@ vref = 9.79E3 / np.sqrt(mref) * np.sqrt(te_u)
 freqref = vref /aGENE_m
 mtmFreq = omMTM * freqref / 2. / np.pi / 1000.
 
+# vrot_u is in the unit of rad/s
 omegaDoppler = vrot_u * n0_global / 2. / np.pi / 1E3
 
-if 1 == 0:
+if 1 == 1:
     x0scan = np.arange(0.96, 0.985, 0.005)
     for xi in x0scan:
         index = np.argmin(abs(uni_rhot - xi))
         print("x0 =", uni_rhot[index])
         print("omega_ExB_kHz =", omegaDoppler[index])
+    plt.plot(uni_rhot, omegaDoppler, label = 'omega_ExB (kHz)')
+    plt.xlabel('rhot')
+    plt.axis([0.9, 1., -100, 100])
+    plt.title(iterdb_file_name)
+    plt.legend()
+    plt.show()
 
 #pedtopInd = np.argmin(abs(EFITdict['rhotn'] - 0.93)) + 1
 pedtopInd = np.argmin(abs(EFITdict['rhotn'] - 0.89)) + 1
-if 1 == 1:
+if 1 == 0:
     fig, ax = plt.subplots(figsize = (6,4.5))
     ax.plot(uni_rhot, omegaDoppler / mtmFreq, \
     linewidth = 2., label=r'$\frac{\omega \,\, in \,\, plasma \,\, frame}{\omega^*_e}$')
@@ -74,8 +86,8 @@ if 1 == 1:
     ax.tick_params(axis='both',which='major',labelsize=12,\
         length=3,width=2,direction='out')
     #plt.savefig('Diallo_off7_linear1.pdf', format='pdf')
-    plt.savefig('Callen_linear1.pdf', format='pdf')
-    #plt.show()
+    #plt.savefig('Callen_linear1.pdf', format='pdf')
+    plt.show()
     #file_name = 'DIIID_Diallo_freq'
 
 
