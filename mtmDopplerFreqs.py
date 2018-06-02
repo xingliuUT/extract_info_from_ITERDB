@@ -63,7 +63,7 @@ if 1 == 1:
     plt.plot(uni_rhot, omegaDoppler, label = 'omega_ExB (kHz)')
     plt.xlabel('rhot')
     plt.axis([0.9, 1., -100, 100])
-    plt.title(iterdb_file_name)
+    plt.title(iterdb_file_name + ', n0_global = ' + str(n0_global))
     plt.legend()
     plt.show()
 
